@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dat.sem3</groupId>
-    <artifactId>JanExamBackend</artifactId>
+    <artifactId>JanuaryExamBackend</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
 
-    <name>JanExamBackend</name>
+    <name>JanuaryExamBackend</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
