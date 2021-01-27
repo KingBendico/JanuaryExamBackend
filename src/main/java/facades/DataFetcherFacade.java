@@ -2,12 +2,7 @@ package facades;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import dtos.HotelDTO;
-import dtos.HotelsDTO;
-import entities.Hotel;
 import java.io.IOException;
-import java.lang.ProcessBuilder.Redirect.Type;
-import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -22,7 +17,7 @@ public class DataFetcherFacade {
     
     private static DataFetcherFacade instance;
     private static EntityManagerFactory emf;
-    protected static Collection<Hotel> enums;
+  //  protected static Collection<Hotel> enums;
 
     public DataFetcherFacade() {
 
@@ -37,28 +32,28 @@ public class DataFetcherFacade {
     }
 
 
-      public static void HotelsDTO() throws IOException {
-          
-        
-          EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
-          EntityManager em = emf.createEntityManager();
-          
-        Gson gson = new Gson();
-        String jasonString = HttpUtils.fetchData("http://exam.cphdat.dk:8000/hotel/all");
-        java.lang.reflect.Type collectionType = new TypeToken<Collection<Hotel>>(){}.getType();
-        enums = gson.fromJson(jasonString, collectionType); 
-        
-        try {
-        em.getTransaction().begin();                  
-        for (Hotel hs : enums) {                 
-            em.persist(hs);
-            System.out.println(hs);
-        }
-    em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-    }   
+//      public static void HotelsDTO() throws IOException {
+//          
+//        
+//          EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
+//          EntityManager em = emf.createEntityManager();
+//          
+//        Gson gson = new Gson();
+//        String jasonString = HttpUtils.fetchData("http://exam.cphdat.dk:8000/hotel/all");
+//        java.lang.reflect.Type collectionType = new TypeToken<Collection<Hotel>>(){}.getType();
+//        enums = gson.fromJson(jasonString, collectionType); 
+//        
+//        try {
+//        em.getTransaction().begin();                  
+//        for (Hotel hs : enums) {                 
+//            em.persist(hs);
+//            System.out.println(hs);
+//        }
+//    em.getTransaction().commit();
+//        } finally {
+//            em.close();
+//        }
+//    }   
       
 //      public static void main(String[] args) throws IOException {
 //       
