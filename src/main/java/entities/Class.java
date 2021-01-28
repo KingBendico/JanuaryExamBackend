@@ -34,7 +34,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Class.findAll", query = "SELECT c FROM Class c"),
     @NamedQuery(name = "Class.findById", query = "SELECT c FROM Class c WHERE c.id = :id"),
     @NamedQuery(name = "Class.findBySemester", query = "SELECT c FROM Class c WHERE c.semester = :semester"),
-    @NamedQuery(name = "Class.findByNumberOfStudents", query = "SELECT c FROM Class c WHERE c.numberOfStudents = :numberOfStudents")})
+    @NamedQuery(name = "Class.findByNumberOfStudents", query = "SELECT c FROM Class c WHERE c.numberOfStudents = :numberOfStudents"),
+    @NamedQuery(name = "Class.deleteAllRows", query = "DELETE from Class")
+})
+
 public class Class implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,6 +61,13 @@ public class Class implements Serializable {
 
     public Class() {
     }
+
+    public Class(String semester, Integer numberOfStudents) {
+        this.semester = semester;
+        this.numberOfStudents = numberOfStudents;
+    }
+    
+    
 
     public Class(Integer id) {
         this.id = id;

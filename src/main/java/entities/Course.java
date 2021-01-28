@@ -53,6 +53,15 @@ public class Course implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
     private List<Class> classList;
 
+      
+      public void addClass(Class cl) {
+        classList.add(cl);
+        if (cl != null) {
+            cl.setCourse(this);
+        }
+    }
+    
+    
     public Course() {
     }
 

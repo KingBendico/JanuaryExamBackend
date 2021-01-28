@@ -25,7 +25,7 @@ import utils.APIFetcher;
 import utils.EMF_Creator;
 
 /**
- * @author lam@cphbusiness.dk
+ * @author Bendico
  */
 @Path("info")
 public class DemoResource {

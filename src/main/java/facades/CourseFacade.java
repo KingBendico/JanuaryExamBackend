@@ -36,6 +36,23 @@ public class CourseFacade {
         return emf.createEntityManager();
     }
 
+    
+    
+      public CourseDTO getCourse(String courseName) throws NotFoundException {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Course course = em.createQuery("SELECT c FROM Course c WHERE c.courseName = :courseName", Course.class).setParameter("courseName", courseName).getSingleResult();
+            if (course == null) {
+                throw new NotFoundException("Requested course does not exist");
+            } else {
+                return new CourseDTO(course);
+            }
+
+        } finally {
+            em.close();
+        }
+    }
+    
  
         
         public CourseDTO addCourse (CourseDTO c) {
@@ -52,6 +69,31 @@ public class CourseFacade {
         }
         return new CourseDTO(con);
     }
+        
+        public CourseDTO editCourse(CourseDTO c) throws NotFoundException {
+        EntityManager em = emf.createEntityManager();
+        Course course = em.createQuery("SELECT c FROM Course c WHERE c.courseName = :courseName", Course.class).setParameter("courseName", c.getCourseName()).getSingleResult();
+        System.out.println("course from DB: " + course.getCourseName());
+        if (course == null) {
+            throw new NotFoundException("Requested course with " + c.getCourseName() + " does not exist");
+        }
+      
+        course.setCourseName(c.getCourseName());
+        course.setDescription(c.getDescription());
+       
+        try {
+            em.getTransaction().begin();
+            System.out.println(c.getCourseName());
+            System.out.println(course.getDescription() + " efter db");
+            em.merge(course);
+            em.getTransaction().commit();
+            return new CourseDTO(course);
+        } finally {
+            em.close();
+        }
+    }
+        
+        
     
         public CoursesDTO getAllCourses() {
         EntityManager em = emf.createEntityManager();

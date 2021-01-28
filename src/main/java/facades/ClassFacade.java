@@ -2,7 +2,9 @@ package facades;
 
 import dtos.ClassDTO;
 import dtos.ClassesDTO;
+import dtos.CourseDTO;
 import entities.Class;
+import entities.Course;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -21,9 +23,9 @@ public class ClassFacade {
     /**
      *
      * @param _emf
-     * @return an instance of this facade class.
+     * @return an instance of this facade c1
      */
-    public static ClassFacade getFacadeContact(EntityManagerFactory _emf) {
+    public static ClassFacade getFacadeClass(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new ClassFacade();
@@ -35,7 +37,27 @@ public class ClassFacade {
         return emf.createEntityManager();
     }
 
+    
+    
+    public ClassDTO addClassToCourse(String courseName, ClassDTO clDTO) {
+        EntityManager em = emf.createEntityManager();     
+        try {
+            
+            Class cl = new Class(clDTO.getSemester(), clDTO.getNumberOfStudents());
+            Course course = em.createQuery("SELECT c FROM Course c WHERE c.courseName = :courseName", Course.class)
+            .setParameter("courseName", courseName).getSingleResult();
+            course.addClass(cl);
+            em.getTransaction().begin();
+            em.persist(course);
+            em.getTransaction().commit();
+            return new ClassDTO(cl);
+        } finally {
+            em.close();
+        }
 
+    }
+
+    
     
    
 }

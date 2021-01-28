@@ -21,6 +21,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
@@ -47,7 +48,9 @@ public class CourseResourceTest {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
         EntityManager em = emf.createEntityManager();
         r1 = new Course("02312 Indledende programmering", "The goal of the course is to make");
-        r2 = new Course("62588 Operativ-systemer", "The purpose of this course is to provide the");
+       // r2 = new Course("62588 Operativ-systemer", "The purpose of this course is to provide the");
+        r2 = new Course("Operativsystemer", "The purpose of this course is to provide the");
+        
         try {
             em.getTransaction().begin();
             em.persist(r1);
@@ -128,17 +131,18 @@ public class CourseResourceTest {
 
   
 
-//    @Test
-//    public void testGetCourse() throws Exception {
-//        login("user", "test");
-//        given()
-//                .contentType("application/json").
-//                header("x-access-token", securityToken)
-//                .get("/course/email@email.dk").then()
-//                .assertThat()
-//                .statusCode(HttpStatus.OK_200.getStatusCode())
-//                .body("name", equalTo("julu"));
-//    }
+    @Test
+    public void testGetCourse() throws Exception {
+        login("admin", "test");
+        given()
+                .contentType("application/json").
+                header("x-access-token", securityToken)
+                .get("/course/Operativsystemer").then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("courseName", equalTo("Operativsystemer"));
+        
+    }
 
     @Test
     public void testAddCourse() throws Exception {

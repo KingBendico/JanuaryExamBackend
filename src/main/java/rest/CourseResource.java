@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.CourseDTO;
 import dtos.CoursesDTO;
+import errorhandling.NotFoundException;
 import facades.CourseFacade;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
@@ -62,13 +63,25 @@ public class CourseResource {
 
     @Path("/add")
     @POST
-    @Produces({MediaType.APPLICATION_JSON})
     @RolesAllowed("admin")
+    @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public String addCourse(String course) {
         CourseDTO co = GSON.fromJson(course, CourseDTO.class);
         CourseDTO newContact = FACADE.addCourse(co);
         return GSON.toJson(newContact);
+    }
+    
+    @Path("/edit/{course}")
+    @PUT  
+// @RolesAllowed("admin")
+    @Produces({MediaType.APPLICATION_JSON})  
+    @Consumes({MediaType.APPLICATION_JSON})
+    public String editCourse(@PathParam("course") String course, String description) throws NotFoundException {
+        CourseDTO co = GSON.fromJson(course, CourseDTO.class);
+        co.setCourseName(course);   
+        CourseDTO newCourse = FACADE.editCourse(co);
+        return GSON.toJson(newCourse);
     }
 
 
@@ -81,6 +94,14 @@ public class CourseResource {
         return GSON.toJson(courses);
     }
 
+    @Path("/{course}")
+    @GET
+    // @RolesAllowed("admin")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getContact(@PathParam("course") String course) throws NotFoundException {
+        CourseDTO c = FACADE.getCourse(course);
+        return GSON.toJson(c);
+    }
 
 
 }
