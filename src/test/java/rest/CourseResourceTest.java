@@ -160,6 +160,24 @@ public class CourseResourceTest {
         Assertions.assertEquals("02312 Indledende programmering", response.jsonPath().getString("courseName"));
     }
     
+    
+        @Test
+        @Disabled
+    public void testEditCourse() throws Exception {
+       String json = String.format("{courseName: \"%s\", description: \"%s\"}", "Operativsystemer", "The goal of the course is to blah blah bloa");
+        login("admin", "test");
+       Response response = given().contentType("application/json").
+                header("x-access-token", securityToken).
+                body(json)
+                .when()
+                .put("/course/edit/Operativsystemer")
+                .then()
+                .extract().response();
+       
+        Assertions.assertEquals(200, response.statusCode());
+        Assertions.assertEquals("Operativsystemer", response.jsonPath().getString("description"));
+    }
+    
   
     
 }
